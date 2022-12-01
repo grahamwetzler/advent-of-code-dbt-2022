@@ -1,0 +1,12 @@
+config:
+  send_anonymous_usage_stats: False
+  use_colors: True
+  debug: False
+
+default:
+  outputs:
+    dev:
+      type: duckdb
+      path: ./target/duck.db
+      external_root: ./target/
+  target: dev
