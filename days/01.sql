@@ -1,11 +1,22 @@
 with input as (
-  from {{ ref("01-prep") }}
+  select *
+       , row_number() over () as row_id
+    from {{ read_csv(columns={'calories': 'int'}) }}
+)
+
+, elves as (
+  select *
+       , calories is null as blank_line
+       , row_number() over (partition by blank_line order by row_id) as blank_line_row_id
+       , row_id - blank_line_row_id as elf
+    from input
 )
 
 , calories_by_elf as (
   select elf
        , sum(calories) as calories
-    from input
+    from elves
+   where not blank_line
    group by 1
 )
 
@@ -16,7 +27,7 @@ with input as (
    limit 3
 )
 
- select 1 as part
+select 1 as part
      , max(calories) as answer
   from calories_by_elf
  union all
