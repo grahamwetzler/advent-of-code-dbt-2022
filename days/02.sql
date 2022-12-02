@@ -6,7 +6,7 @@ with input as (
   )
 )
 
-, outcomes as (
+, outcomes(opponent, you, result) as (
   from (values ('A', 'X', 'draw')
              , ('A', 'Y', 'win',)
              , ('A', 'Z', 'lose')
@@ -16,28 +16,24 @@ with input as (
              , ('C', 'X', 'win',)
              , ('C', 'Y', 'lose')
              , ('C', 'Z', 'draw'))
-     _ (opponent, you, result)
 )
 
-, score_outcomes as (
+, score_outcomes(result, score_outcome) as (
   from (values ('lose', 0)
              , ('draw', 3)
              , ('win',  6))
-     _ (result, score_outcome)
 )
 
-, score_choices as (
+, score_choices(you, score_choice) as (
   from (values ('X', 1)
              , ('Y', 2)
              , ('Z', 3))
-     _ (you, score_choice)
 )
 
-, part_2_instructions as (
+, part_2_instructions(you, result) as (
   from (values ('X', 'lose')
              , ('Y', 'draw')
              , ('Z', 'win'))
-     _ (you, result)
 )
 
 , final_outcome as (
