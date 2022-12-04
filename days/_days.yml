@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: "01"
+    tests:
+      - test_answer:
+          part: 1
+          answer: 66616
+      - test_answer:
+          part: 2
+          answer: 199172
+  - name: "02"
+    tests:
+      - test_answer:
+          part: 1
+          answer: 11666
+      - test_answer:
+          part: 2
+          answer: 12767
+  - name: "03"
+    tests:
+      - test_answer:
+          part: 1
+          answer: 7997
+      - test_answer:
+          part: 2
+          answer: 2545
+  - name: "04"
+    tests:
+      - test_answer:
+          part: 1
+          answer: 605
+      - test_answer:
+          part: 2
+          answer: 914
