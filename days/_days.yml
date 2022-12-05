@@ -33,3 +33,11 @@ models:
       - test_answer:
           part: 2
           answer: 914
+  - name: "05"
+    tests:
+      - test_answer:
+          part: 1
+          answer: "'WHTLRMZRC'"
+      - test_answer:
+          part: 2
+          answer: "'GMPMLWNMG'"
