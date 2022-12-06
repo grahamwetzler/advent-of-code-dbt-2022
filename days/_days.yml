@@ -41,3 +41,11 @@ models:
       - test_answer:
           part: 2
           answer: "'GMPMLWNMG'"
+  - name: "06"
+    tests:
+      - test_answer:
+          part: 1
+          answer: 1920
+      - test_answer:
+          part: 2
+          answer: 2334
