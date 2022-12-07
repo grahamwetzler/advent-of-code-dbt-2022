@@ -49,3 +49,11 @@ models:
       - test_answer:
           part: 2
           answer: 2334
+  - name: "07"
+    tests:
+      - test_answer:
+          part: 1
+          answer: 1243729
+      - test_answer:
+          part: 2
+          answer: 4443914
