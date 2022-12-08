@@ -57,3 +57,8 @@ models:
       - test_answer:
           part: 2
           answer: 4443914
+  - name: "08"
+    tests:
+      - test_answer:
+          part: 1
+          answer: 1713
