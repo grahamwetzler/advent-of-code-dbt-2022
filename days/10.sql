@@ -25,7 +25,7 @@ with instructions as (
 )
 
 , run as (
-select * exclude (instruction)
+select *
      , row_number() over () as cycle
      , sum(case
             when instruction_step = 1 and step = 1 then 1
