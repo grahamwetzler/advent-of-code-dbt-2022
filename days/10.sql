@@ -1,3 +1,8 @@
+/*
+  Day 10: Cathode-Ray Tube
+  https://adventofcode.com/2022/day/10
+*/
+
 with instructions as (
   select row_number() over () as step
        , str_split(ins, ' ')[1] as instruction
@@ -41,7 +46,41 @@ select *
     from run
 )
 
+, rows as (
+  select row_number() over (partition by cycle % 40 order by cycle) as row
+       , *
+    from run
+)
+
+, cols as (
+  select row_number() over (partition by row order by cycle) - 1 as col
+       , *
+    from rows
+)
+
+, pixels as (
+  select *
+       , coalesce(lag(x) over (order by cycle), 0) as prev_x
+       , case
+           when col between prev_x - 1 and prev_x + 1
+            then '#'
+            else '.'
+         end as pixel
+    from cols
+)
+
+, pixel_string as (
+  select row
+       , string_agg(pixel, '') as pixel
+    from pixels
+   group by 1
+)
+
 select 1 as part
-     , sum(signal_strength) as answer
+     , sum(signal_strength)::text as answer
   from part_1
  where cycle in (20, 60, 100, 140, 180, 220)
+ union all
+select 2 as part
+     , pixel as answer
+  from pixel_string
