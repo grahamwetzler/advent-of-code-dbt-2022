@@ -82,5 +82,5 @@ select 1 as part
  where cycle in (20, 60, 100, 140, 180, 220)
  union all
 select 2 as part
-     , pixel as answer
+     , string_agg(pixel, chr(10)) as answer
   from pixel_string
