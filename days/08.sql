@@ -34,18 +34,58 @@ with grid as (
                            from trees r
                           where t.row = r.row
                             and t.col < r.col) then 1
-          when t.tree > (select max(tree) /* down */
-                           from trees d
-                          where t.col = d.col
-                            and t.row < d.row) then 1
           when t.tree > (select max(tree) /* up */
                            from trees u
                           where t.col = u.col
                             and t.row > u.row) then 1
+          when t.tree > (select max(tree) /* down */
+                           from trees d
+                          where t.col = d.col
+                            and t.row < d.row) then 1
          end as visible
     from trees t
 )
 
+, tree_positions as (
+  select row
+       , col
+       , tree
+       , (select first_value(col) over (order by col desc)
+            from trees l
+           where t.row = l.row
+             and t.col > l.col
+             and t.tree <= l.tree) as col_left
+       , (select first_value(col) over (order by col)
+            from trees l
+           where t.row = l.row
+             and t.col < l.col
+             and t.tree <= l.tree) as col_right
+       , (select first_value(row) over (order by row desc)
+            from trees l
+           where t.col = l.col
+             and t.row > l.row
+             and t.tree <= l.tree) as row_up
+       , (select first_value(row) over (order by row)
+            from trees l
+           where t.col = l.col
+             and t.row < l.row
+             and t.tree <= l.tree) as row_down
+    from trees t
+)
+
+, part_2 as (
+select coalesce(col - col_left, col - 1) as to_left
+     , coalesce(col_right - col, (select max(col) from trees) - col) as to_right
+     , coalesce(row - row_up, row - 1) as to_up
+     , coalesce(row_down - row, (select max(row) from trees) - row) as to_down
+  from tree_positions
+)
+
+
 select 1 as part
      , sum(visible) as answer
   from part_1
+ union all
+select 2 as part
+     , max(to_left * to_right * to_down * to_up) as answer
+  from part_2

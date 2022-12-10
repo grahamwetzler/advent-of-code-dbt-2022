@@ -62,3 +62,6 @@ models:
       - test_answer:
           part: 1
           answer: 1713
+      - test_answer:
+          part: 2
+          answer: 268464
