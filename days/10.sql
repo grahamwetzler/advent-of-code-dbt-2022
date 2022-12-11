@@ -19,8 +19,8 @@ with instructions as (
 )
 
 , steps as (
-   from addx
-  union all
+    from addx
+   union all
   select *
        , 1 as instruction_step
     from instructions
@@ -63,8 +63,8 @@ select *
        , coalesce(lag(x) over (order by cycle), 0) as prev_x
        , case
            when col between prev_x - 1 and prev_x + 1
-            then '#'
-            else '.'
+            then '##'
+            else '  '
          end as pixel
     from cols
 )
@@ -79,7 +79,7 @@ select *
 select 1 as part
      , sum(signal_strength)::text as answer
   from part_1
- where cycle in (20, 60, 100, 140, 180, 220)
+ where list_contains(range(20, 221, 40), cycle)
  union all
 select 2 as part
      , string_agg(pixel, chr(10)) as answer
