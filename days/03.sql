@@ -3,13 +3,10 @@
   https://adventofcode.com/2022/day/3
 */
 
-with input as (
+with input(elf, items) as (
   select row_number() over () as elf
        , *
-    from read_csv(
-      'input/03.csv',
-      columns={'items': 'text'}
-    )
+    from read_csv_auto('input/03.csv')
 )
 
 /* Part 1: Split items into compartments using string slicing. */
