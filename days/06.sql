@@ -3,8 +3,8 @@
   https://adventofcode.com/2022/day/6
 */
 
-with input(buffer) as (
-  select unnest(str_split(char, ''))
+with input as (
+  select unnest(str_split(char, '')) as buffer
     from read_csv_auto('input/06.csv') as chars(char)
 )
 
@@ -16,7 +16,6 @@ with input(buffer) as (
 
 , markers as (
   select id
-       , buffer
        , length(list_distinct(list(buffer) over (order by id rows between 3 preceding and current row))) as packet_marker
        , length(list_distinct(list(buffer) over (order by id rows between 13 preceding and current row))) as message_marker
     from row_id
