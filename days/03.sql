@@ -18,11 +18,10 @@ with input(elf, items) as (
     from input
 )
 
-/* Part 1: Filter for common item, then unnest into one distinct row per elf and item. */
+/* Part 1: Filter for common item. */
 , common_by_compartment as (
-  select distinct
-         elf
-       , unnest(list_filter(compartment_1, x -> contains(compartment_2, x))) as item
+  select elf
+       , list_filter(compartment_1, x -> contains(compartment_2, x))[1] as item
     from compartments
 )
 
